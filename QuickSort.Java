@@ -1,0 +1,52 @@
+import java.util.Arrays;
+
+public class QuickSort {
+    public int[] quickSort(int[] array) {
+        // Write your solution here
+        if(array == null || array.length < 2) return array;
+        quickSort(array,0,array.length -1);
+        return array;
+    }    
+
+    private void quickSort(int[] array, int left, int right){
+      // base case
+      // 此时 'right' 是可以出现跑过 left 的情况的，看下面递归，如果pivotPos = left 时
+      if(left >= right) return;
+      // 我们是可以在一个subarray里面做partition的， 左右边界这里可以灵活
+      // partition 即为 确定一个随机元素的准确位置 的算法
+      int pivotPos = partition(array,left,right);
+      // 对于已经确定准确位置元素的左边和右边，都做同样的事排好序，就完事
+      quickSort(array,left,pivotPos - 1);
+      quickSort(array,pivotPos + 1, right);
+    }
+
+
+    private int partition(int[] array,int left, int right){
+      // 注意起点是left
+      int pivotIndex = left + (int)(Math.random() * (right - left + 1));
+      int pivot = array[pivotIndex];
+      // 交换pivot
+      swap(array,pivotIndex,right);
+      // 挡板思想，找一个元素的正确位置
+      // 起点是left！终点是right - 1！
+      int i = left; int j = right - 1;
+      // i 与 j 相遇并错过1位 为退出条件，这样才检查了i==j时，array[i]与pivot的大小
+      while(i <= j){
+          while(i <= j && array[i] < pivot) i++;
+          while(i <= j && array[j] >= pivot) j--;
+          //如果j 已经跑到-1了， 就不用swap了
+          if(i <= j)
+            swap(array,i,j);
+      }
+      // 此时 i 左边的全是小于pivot，j右边全是大于pivot，i是j右边第一个，所以交换i与pivot很稳
+      swap(array,i,right);
+      return i;
+    }
+
+    private void swap(int[] a, int i, int j){
+        int temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+
+}
