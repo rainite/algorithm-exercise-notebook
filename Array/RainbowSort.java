@@ -11,7 +11,7 @@ Assumptions
 The input array is not null.
 **/
 
-public class RainbowSort {
+public class Solution {
   public int[] rainbowSort(int[] array) {
     // Write your solution here
     if(array == null || array.length == 1) return array;
@@ -20,21 +20,23 @@ public class RainbowSort {
     [0,i): i左边的全是 -1
     [i,j): j左边到i的全是0
     [i,k]: 未探索区域
-    [k,n-1]: k右边的全是1
+    (k,n-1]: k右边的全是1
 
     所以我们主要挪的是j这个pointer
-    case1, if input[j] == -1, swap(i,j) i++
+    case1, if input[j] == -1, swap(i,j) i++;j++ 这里注意定义，i不包括i的左边全是-1
     case2, if input[j] == 0, j++
-    case3, if input[j] == 1, swap(j,k) k--
+    case3, if input[j] == 1, swap(j,k) k-- 同样看定义，不包括k
     **/ 
     int i,j,k;
     i = j = 0; k = array.length - 1;
     while(j <= k){
-      if(j <= k && array[j] == -1) {
+      if(array[j] == -1) {
         swap(array,i,j);
         i++;j++;
       }
-      else if(j <= k && array[j] == 0) j++;
+      else if(array[j] == 0) {
+        j++;
+      }
       else {
         swap(array,j,k);
         k--;
@@ -49,3 +51,4 @@ public class RainbowSort {
     array[b] = temp;
   }
 }
+

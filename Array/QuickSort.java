@@ -27,10 +27,27 @@ public class QuickSort {
       int pivot = array[pivotIndex];
       // 交换pivot
       swap(array,pivotIndex,right);
-      // 挡板思想，找一个元素的正确位置
       // 起点是left！终点是right - 1！
       int i = left; int j = right - 1;
+      /**
+      挡板思想 2个pointer, 3块区域
+      [0,i): i左边的全是 小于pivot的
+      [i,j]: 未探索区域
+      (j,n-1]: j右边全是 大于等于 pivot的
+
+      所以我们主要挪的是i这个pointer
+      case1, if input[i] < pivot, i++
+      case2, if input[i] >= pivot, swap(array,i,j); j--;
+      while(i <= j){
+          if(array[i] < pivot) i++;
+          else{
+            swap(array,i,j);
+            j--;
+          }
+      }
+      **/
       // i 与 j 相遇并错过1位 为退出条件，这样才检查了i==j时，array[i]与pivot的大小
+      // 因为就2个pointer， 可以这么玩，如果是3个以上，就只能按照挡板法来分析区域和挪动的pointer了
       while(i <= j){
           while(i <= j && array[i] < pivot) i++;
           while(i <= j && array[j] >= pivot) j--;
