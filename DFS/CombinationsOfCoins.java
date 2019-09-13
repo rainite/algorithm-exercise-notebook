@@ -47,6 +47,7 @@ public class Solution {
       if (target % coins[index] == 0) {
         nums.add(target / coins[index]);
         res.add(new ArrayList<>(nums));
+        // 注意这里要还原！
         nums.remove(nums.size() - 1);
       }
     }
@@ -54,6 +55,7 @@ public class Solution {
     for (int i = 0; i * coins[index] <= target; i++) {
       nums.add(i);
       helper(res, nums,target -i * coins[index], coins, index + 1);
+      // 还原！
       nums.remove(nums.size() - 1);
     }
   }
