@@ -38,6 +38,7 @@
    - map(Function) 传入T，传出R，用于类型转换 比如Employee::getName
 3. 排序
    - sorted(Comparator)
+
 常见的终止操作:
 1. 查找
    - allMatch(Predicate) stream中所有元素匹配Predicate条件，则返回 true 否则 false
