@@ -22,8 +22,9 @@ public class QuickSort {
 
 
     private int partition(int[] array,int left, int right){
-      // 注意起点是left
+      // 注意起点是left,或者说offset是left
       int pivotIndex = left + (int)(Math.random() * (right - left + 1));
+      // 这里很有必要,后面会多次比较pivot的值,如果还是用index, 在swap后脑子会晕,刻舟求剑的故事
       int pivot = array[pivotIndex];
       // 交换pivot
       swap(array,pivotIndex,right);
