@@ -74,12 +74,30 @@ text[1] = "ID2,Chicago,shoes,1,Air";
 text[2] = "ID3,Central Department Store,shoes,5,BonPied";
 text[3] = "ID4,Quail Hollow,forks,3,Pfitzcraft";
 List<String> list = Arrays.asList(text);
-Map<String,Integer> brand = list.stream()
-        .collect(Collectors.groupingBy(word -> word.split(",")[2],Collectors.summingInt(word -> Integer.parseInt(word.split(",")[3])))
-        );
+Map<String, Integer> brand =
+list.stream()
+        .collect(
+        Collectors.groupingBy(
+                word -> word.split(",")[2],
+                Collectors.summingInt(word -> Integer.parseInt(word.split(",")[3]))));
 ```
 最后得到map里{"shoes" : 8, "forks" : "forks" : 3}
 注意groupingBy这里signature第一项为Function<>，构造出Key，第二项是另一个Collector，供你做任何骚操作，构造出value
+
+```java
+Map<String,List<String>> hottest = list.stream()
+.collect(
+        Collectors.groupingBy(
+        word -> word.split(",")[2],
+        Collectors.mapping(
+                word -> word.split(",")[4],
+                Collectors.toList())));
+```
+输出
+```python
+forks=[Pfitzcraft]
+shoes=[Air, Air, BonPied]
+```
 
 ### 文件读写
 注意文件读写一定要在try catch(IOException e)里
