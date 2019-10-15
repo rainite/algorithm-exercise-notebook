@@ -22,10 +22,9 @@ How is the binary tree represented?
 
 We use the level order traversal sequence with a special symbol "#" denoting the null node.
 
-思路: 没思路, 得记一下,
-1. 正常层级遍历的时候,是右进,左出 或者 尾进, 头出
-2. 这里zigzag, 就是多了一个 左进,右出的情况
-3. 在右进左出正常情况时, 要注意先存right, 再存left 这样才保证下一层从左边读出
+思路: 直接背一下,
+要点就是, 哪边拿, 就从什么方向去读, 然后往另一个方向存
+比如右边拿, 则从node的右边开始添加, 然后放在左边
  */
 
 public class Solution {
