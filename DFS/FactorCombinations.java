@@ -51,3 +51,56 @@ public class Solution {
     }
   }
 }
+
+/**
+这样做有点百元算法班的味道, 做成了硬币那个题 4^99的感觉, 怎么做成99^4次方呢
+prepocessing: 先找到target所有的factor
+level: len(facotrs)
+status: 动态, 取多个当前的factor, 从0 ~ i, i是最大factor ^ i < target 并且 能整除的
+ */
+
+public class Solution {
+  public List<List<Integer>> getFactors(int target) {
+    // Write your solution here
+    List<List<Integer>> res = new ArrayList<>();
+    if (target <= 1) {
+      return res;
+    }
+    List<Integer> factors = preProcess(target);
+    
+    helper(factors, res, new ArrayList<Integer>(), target, 0);
+    return res;
+  }
+  private void helper(List<Integer> factors, List<List<Integer>> res, List<Integer> aug, int target, int index) {
+    if (index == factors.size()) {
+      if (target == 1) {
+        res.add(new ArrayList<>(aug));
+      }
+      return;
+    }
+    int factor = factors.get(index);
+    int count = 0;
+    
+    helper(factors, res, aug, target, index + 1);
+    while (target % factor == 0) {
+      aug.add(factor);
+      target /= factor;
+      count++;
+      helper(factors, res, aug, target, index + 1);
+    }  
+          
+    for (int j = 0; j < count; j++) {
+      aug.remove(aug.size() - 1); 
+    }            
+  }
+  private List<Integer> preProcess(int target) {
+    List<Integer> res = new ArrayList<>();
+    for (int i = 2; i <= target / 2; i++) {
+      if (target % i == 0) {
+        res.add(i);
+      }
+    }
+    return res;
+  }
+}
+// Time: O(n^因数个数)
