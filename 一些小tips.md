@@ -21,7 +21,7 @@ List<Integer> b =
 ```
 Object array 可以正常用Arrays.asList()转换
 
-## new 多个线程
+## new 多个线程 
 ```java
     Thread[] threads = new Thread[100];
     for (int i = 0; i < 100; i++) {

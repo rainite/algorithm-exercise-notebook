@@ -19,7 +19,7 @@ public class Solution {
     挡板思想 3个pointer, 4块区域
     [0,i): i左边的全是 -1
     [i,j): j左边到i的全是0
-    [i,k]: 未探索区域
+    [j,k]: 未探索区域
     (k,n-1]: k右边的全是1
 
     所以我们主要挪的是j这个pointer
