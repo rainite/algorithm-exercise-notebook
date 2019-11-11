@@ -30,3 +30,39 @@ Object array 可以正常用Arrays.asList()转换
     }
     Arrays.asList(threads).forEach(a -> a.start());
 ```
+
+## Something in bash
+怎么在sh环境写一个forloop：
+```
+List=$($CHILLI_QUERY "$CHILLI_SOCK" list ip "$CLIARG_ip" 2>/dev/null)
+# 把list元素放到一个bucket里，可以用$1, $2获取
+set -- $List
+i=1;
+while [ $i -le $# ]; do
+    eval echo "$"$i
+    i=$((i+1));
+done
+```
+
+第二种做法：
+```
+i=0
+for var in $List
+do
+    i=$((i+1))
+    if [ $i = 16 ] ; then
+        i=$((i-15))
+    fi
+    case $i in
+    1)
+        mac=$(runt get network.hotspot."$instance".mac)
+        mac="${mac} $var"
+        runt set network.hotspot."$instance".mac "$mac"
+        ;;
+    2)
+        ;;
+    *)
+        ;;
+    esac
+done
+```

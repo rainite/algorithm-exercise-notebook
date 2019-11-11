@@ -18,35 +18,30 @@ class Node {
 1. 先检查是否需要复制节点
 2. 从map中取出新链的节点, 把原始关系复制上去
 */
-class Solution {
-    public Node copyRandomList(Node head) {
-        if (head == null) {
-            return head;
-        }
-        Map<Node,Node> map = new HashMap<>();
-        Node newNode = new Node(head.val,null,null);
-        Node res = newNode;
-        map.put(head, newNode);
-        while (head != null) {
-            if (head.next != null) {
-                if (!map.containsKey(head.next)) {
-                    Node newNext = new Node(head.next.val,null,null);
-                    map.put(head.next, newNext);
-                }
-                newNode.next = map.get(head.next);
-            }
-            if (head.random != null) {
-                if (!map.containsKey(head.random)) {
-                    Node newRandom = new Node(head.random.val,null,null);
-                    map.put(head.random, newRandom);
-                }
-                newNode.random = map.get(head.random);
-            }
-            // move the pointer
-            head = head.next;
-            newNode = newNode.next;
-        }
-        return res;
+public class Solution {  
+  public Node copyRandomList(Node head) {
+    if (head == null) {
+      return null;
     }
-    
+    HashMap<Node, Node> map = new HashMap<Node, Node>();
+    Node oldNode = head;
+    Node newNode = new Node(oldNode.val);
+    map.put(oldNode, newNode);
+    while (oldNode != null) {
+      if (oldNode.random != null) {
+        // copy node
+        map.putIfAbsent(oldNode.random, new Node(oldNode.random.val, null, null));
+        // copy edge
+        newNode.random = map.get(oldNode.random);
+      }
+      if (oldNode.next != null) {
+        map.putIfAbsent(oldNode.next, new Node(oldNode.next.val, null, null));
+        newNode.next = map.get(oldNode.next);
+      }
+      // move pointer
+      oldNode = oldNode.next;
+      newNode = newNode.next;
+    }
+    return map.get(head);
+  }
 }

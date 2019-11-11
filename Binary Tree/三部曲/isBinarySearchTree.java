@@ -19,22 +19,26 @@
 //   }
 // }
 
-// 思路，记录当前root.val 值应该在什么范围，左儿子则应该在[l,root.val) 右儿子则是(root.val,r]
-public class Solution {
-    public boolean isBST(TreeNode root) {
-        // Write your solution here
-        return isBST(root,Integer.MIN_VALUE,Integer.MAX_VALUE);
+/* 思路，记录当前root.val 值应该在什么范围，左儿子则应该在[l,root.val) 右儿子则是(root.val,r]
+巧妙运用null 来避开root.val就等于minvalue or maxvalue的情况
+*/
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return helper(root, null, null);
     }
-
-    private boolean isBST(TreeNode root,int l, int r) {
+    private boolean helper(TreeNode root, Integer left, Integer right) {
+        // base
         if (root == null) {
             return true;
         }
-        if (root.key <= l || root.key >= r) {
+        if (left != null && left >= root.val ||
+            right != null && right <= root.val) {
             return false;
         }
 
-        return isBST(root.left,l,root.key) && isBST(root.right,root.key,r);
+        boolean lChild = helper(root.left,left, root.val);
+        boolean rChild = helper(root.right, root.val, right);
+        return lChild && rChild;
     }
 }
 
