@@ -30,6 +30,17 @@ Object array 可以正常用Arrays.asList()转换
     }
     Arrays.asList(threads).forEach(a -> a.start());
 ```
+## 常用Regex表达
+所有非字母:
+```
+[^a-zA-Z]
+```
+`[^` 表示 Match a single character not present in the list below  
+`-` 表示一个range  
+这个regex表达意思为只要有一个非字母,就返回true, 配合replaceAll function, 可以把所有非字母的元素给替换了. 比如
+```
+paragraph.replaceAll("[^a-zA-Z]", " ")
+```
 
 ## Something in bash
 怎么在sh环境写一个forloop：
