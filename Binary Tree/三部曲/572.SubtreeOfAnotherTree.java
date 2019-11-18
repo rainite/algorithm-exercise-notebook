@@ -52,10 +52,7 @@ class Solution {
     if (s == null && t == null) {
       return true;
     }
-    if (s == null || t == null) {
-      return false;
-    }
-    if (s.val != t.val) {
+    if (s == null || t == null || s.val != t.val) {
       return false;
     }
     return isSame(s.left,t.left) && isSame(s.right, t.right);
