@@ -23,3 +23,25 @@ public class Solution {
 
   }
 }
+
+//更容易懂的版本， 维护stack意义为暂存元素头顶是最小的
+class Solution {
+  public List<Integer> inorderTraversal(TreeNode root) {
+    Deque<TreeNode> stack = new LinkedList<>();
+    List<Integer> res = new ArrayList<>();
+    pushLeft(root, stack);
+    while (!stack.isEmpty()) {
+      TreeNode cur = stack.pop();
+      res.add(cur.val);
+      cur = cur.right;
+      pushLeft(cur,stack);
+    }
+    return res;
+  }
+  private void pushLeft(TreeNode root, Deque<TreeNode> stack) {
+    while (root != null) {
+      stack.push(root);
+      root = root.left;
+    }
+  }
+}
