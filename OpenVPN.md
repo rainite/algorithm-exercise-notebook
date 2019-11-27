@@ -1,4 +1,4 @@
-# Tutorial for setting up an OpenVPN server and client in DAL
+# Tutorial for setting up an OpenVPN server and client
 
 ## Preparation
 
@@ -19,27 +19,28 @@ Sending:
 
 ## How do we know the public key can be trusted?
 
-The public key can be faked, so we need something to prove the public key is exactly what we want. That's why We need CA to sign the public key. We can refer to this page to know more about what is CA: https://en.wikipedia.org/wiki/Certificate_authority
-How do I generate all of the key pairs and sign them?
+The public key can be faked, so we need something to prove the public key is exactly what we want. That's why we need CA to sign the public key. We can refer to this page to know more about what is CA: https://en.wikipedia.org/wiki/Certificate_authority
 
-The luckiest thing is, OpenVPN's official site has a very detailed tutorial to show you how to generate everything we need. Take a look at this page:  https://openvpn.net/community-resources/setting-up-your-own-certificate-authority-ca
+## How do I generate all of the key pairs and sign them?
 
-According to the tutorial, we need a tool called easy-rsa (https://github.com/OpenVPN/easy-rsa-old) to finish the generate. Below is the process that abstracted from the tool to show how it works:
+Luckily, OpenVPN's official site has a very detailed tutorial to show you how to generate everything we need. Take a look at this page:  https://openvpn.net/community-resources/setting-up-your-own-certificate-authority-ca
+
+According to the tutorial, we need a tool called easy-rsa (https://github.com/OpenVPN/easy-rsa-old) to finish the generate. Below is the process that abstracted from the tool to show you what is the machanism behind it:
 
     Generate CA Private Key (CA.key)
     Generate CA Public Key (CA.crt)
     Generate server Private Key (server.crt)
     Generate server Certificate Signing Request (server.csr)
-    server.csr + CA.key => server public key (server.crt)
+    server.csr + CA.key => signed server public key (server.crt)
 
 If we just want to use username and password for clients to connect, that's enough. If we want to use certificate files to connect, which means doubly authentication, we also need to generate clients key pairs:
 
     Generate client1 Private Key (client1.key)
     Generate client1 Certificate Signing Request (client1.csr)
-    client1.csr + CA.key => client1 public key (client1.crt)
+    client1.csr + CA.key => signed client1 public key (client1.crt)
     Repeat 1-3 to generate and sign multiple clients public keys
 
-Note that all of these process above is only for TLS hand shake, after hand shake successfully, we will change to use Symmetric-key algorithm for the connection, so we also have to generate Diffie–Hellman parameters to do this job.
+Note that all of these process above is only for TLS hand shake, after hand shaking, we will change to use a Symmetric-key algorithm for the connection, so we also have to generate Diffie–Hellman parameters to do this job.
 
 ## Set up the server side
 
@@ -76,6 +77,6 @@ We have to use an ovpn file to describe the information that a client need:
     ................[CA public key]...............
     </ca>
 
-Remote is the ip address and port of the server, and change your ca public key in the tag \<ca>.
+Remote is the ip address and port of the server, and change your ca public key in the tag `<ca>`.
 
 Then the connection should be enabled.
