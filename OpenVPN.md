@@ -76,6 +76,6 @@ We have to use an ovpn file to describe the information that a client need:
     ................[CA public key]...............
     </ca>
 
-Remote is the ip address and port of the server (here we use WAN ip of the TX64), and change your ca public key in the tag \<ca>.
+Remote is the ip address and port of the server, and change your ca public key in the tag \<ca>.
 
 Then the connection should be enabled.
