@@ -100,3 +100,43 @@ class Solution {
     return 0;
   }
 }
+
+//version 2
+public class Solution {
+  public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+    Set<String> set = new HashSet<>(wordList);
+    Queue<String> que = new LinkedList<>();
+
+    que.offer(beginWord);
+    set.remove(beginWord);
+    int step = 1;
+    
+    while (!que.isEmpty()) {
+      int size = que.size();
+      for (int i = 0; i < size; i++) {
+        String cur = que.poll();
+        char[] curArray = cur.toCharArray();
+        for (int j = 0; j < curArray.length; j++) {
+          char ori = curArray[j];
+          for (char c = 'a'; c <= 'z'; c++) {
+            if (c == ori) continue;
+            curArray[j] = c;
+            String candi = new String(curArray);
+            if (set.contains(candi)) {
+              if (candi.equals(endWord)) {
+                return step + 1;
+              }
+              // visited 与 offer绑定
+              set.remove(candi);
+              que.offer(candi);
+            }
+          }
+          // 改了字母要还原！！
+          curArray[j] = ori;
+        }
+      }
+      step++;
+    }
+    return 0;
+  }
+}

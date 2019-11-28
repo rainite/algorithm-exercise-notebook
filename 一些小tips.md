@@ -9,7 +9,8 @@
 ```java
     int[][] bb = aa.toArray(int[][]::new);
 ```
-
+## Arrays.sort()
+这里面如果要写comparator, 不能传入primitive 的 array! 比如char[], 因为Comparator有<>的, <>里必须放Object!
 ## Array -> List
 注意list里不能有primitive type. 这里转换需要boxing
 ```java
@@ -40,6 +41,14 @@ Object array 可以正常用Arrays.asList()转换
 这个regex表达意思为只要有一个非字母,就返回true, 配合replaceAll function, 可以把所有非字母的元素给替换了. 比如
 ```
 paragraph.replaceAll("[^a-zA-Z]", " ")
+```
+去除所有空格:
+```
+\s+
+```
+Java里`\`要转义表示, 于是就变成了:
+```
+s.replaceAll("\\s+", "");
 ```
 
 ## Something in bash
