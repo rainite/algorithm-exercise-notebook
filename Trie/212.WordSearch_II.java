@@ -55,29 +55,29 @@ class Solution {
     }
     return res;
   }
-  private void dfs(TrieNode node, StringBuilder sb,
+  private void dfs(TrieNode curNode, StringBuilder sb,
                    List<String> res, char[][] board,
                    boolean[][] visited, int i, int j) {
-    
+
     if (i >= board.length || i < 0 || j >= board[0].length || j < 0 ||
-            visited[i][j] || !node.map.containsKey(board[i][j])) {
+            visited[i][j] || !curNode.map.containsKey(board[i][j])) {
       return;
     }
 
     visited[i][j] = true;
     sb.append(board[i][j]);
-    TrieNode cur = node.map.get(board[i][j]);
+    TrieNode nextNode = curNode.map.get(board[i][j]);
 
-    if (cur.isWord == true) {
+    if (nextNode.isWord == true) {
       res.add(sb.toString());
       //dedup
-      cur.isWord = false;
+      nextNode.isWord = false;
     }
 
-    dfs(cur, sb, res, board, visited, i + 1, j);
-    dfs(cur, sb, res, board, visited, i - 1, j);
-    dfs(cur, sb, res, board, visited, i, j + 1);
-    dfs(cur, sb, res, board, visited, i, j - 1);
+    dfs(nextNode, sb, res, board, visited, i + 1, j);
+    dfs(nextNode, sb, res, board, visited, i - 1, j);
+    dfs(nextNode, sb, res, board, visited, i, j + 1);
+    dfs(nextNode, sb, res, board, visited, i, j - 1);
 
     visited[i][j] = false;
     sb.deleteCharAt(sb.length() - 1);
