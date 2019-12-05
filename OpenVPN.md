@@ -3,9 +3,10 @@
 ## Preparation
 
 First before we want to set up an OpenVPN server, let's go through the knowledge we need for this tool.
-Understand what is TLS/SSL
 
-OpenVPN connection is besed on TLS technology,  we can refer to this page: https://en.wikipedia.org/wiki/Transport_Layer_Security to have a basic idea of what is TLS. Basically speaking, TLS need a pair of public key and private key to encrypt messages between clients and servers.  We can use the equation below for better describing:
+## Understand what is TLS/SSL
+
+OpenVPN connection is besed on TLS technology,  we can refer to this page: https://en.wikipedia.org/wiki/Transport_Layer_Security to have a basic idea of what is TLS. Basically, when a client tries to build a connection with a server, there will be a handshake session first. During handshake session, TLS need a pair of public key and private key to encrypt messages between clients and servers.  We can use the equation below for better describing:
 
 Receiving:
 
@@ -40,7 +41,8 @@ If we just want to use username and password for clients to connect, that's enou
     client1.csr + CA.key => signed client1 public key (client1.crt)
     Repeat 1-3 to generate and sign multiple clients public keys
 
-Note that all of these process above is only for TLS hand shake, after hand shaking, we will change to use a Symmetric-key algorithm for the connection, so we also have to generate Diffie–Hellman parameters to do this job.
+## After a successful handshake, what's next?
+Note that all of those process above is only for TLS handshake, after a successful handshake , we will change to use Symmetric-key algorithm for the connection, because asymmetric cryptography is very costly, so we also have to generate Diffie–Hellman parameters to do this job. 
 
 ## Set up the server side
 
