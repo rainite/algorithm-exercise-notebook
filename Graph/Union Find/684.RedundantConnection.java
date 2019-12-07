@@ -41,6 +41,7 @@ class Solution {
 }
 
 class UnionFind {
+  //对于不知道长度的点集, 可用map
   Map<Integer, Integer> map;
   UnionFind(int[][] edges) {
     map = new HashMap<>();
@@ -49,6 +50,7 @@ class UnionFind {
       map.putIfAbsent(e[1], e[1]);
     }
   }
+  //这个recursion, i是变化的, return的永远是'祖先'root
   int find(int i) {
     if (map.get(i) != i) {
       int parent = find(map.get(i));
