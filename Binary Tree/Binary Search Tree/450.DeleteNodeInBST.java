@@ -81,3 +81,45 @@ class Solution {
     return smallest;
   }
 }
+
+// 左边版本
+
+public class Solution {
+  public TreeNode deleteNode(TreeNode root, int key) {
+    // Write your solution here
+    if (root == null) {
+      return null;
+    }
+    if (root.val == key) {
+      if (root.left == null && root.right == null) {
+        return null;
+      } else if (root.left == null || root.right == null) {
+        return root.left == null ? root.right : root.left;
+      } else {
+        // find largest in left subtree
+        // 这里一定要先确定左边这个node是不是就是最大的，不然不好接他的儿子们
+        if (root.left.right == null) {
+          root.left.right = root.right;
+          //root不用接地
+          return root.left;
+        }
+        TreeNode largest = findLargestInLeft(root.left);
+        largest.left = root.left;
+        largest.right = root.right;
+        return largest;
+      }
+    }
+    root.left = deleteNode(root.left, key);
+    root.right = deleteNode(root.right, key);
+    return root;
+  }
+  TreeNode findLargestInLeft(TreeNode root) {
+    while (root.right.right != null) {
+      root = root.right;
+    }
+    // 断node，分情况讨论
+    TreeNode temp = root.right;
+    root.right = root.right.left;
+    return temp;
+  }
+}
