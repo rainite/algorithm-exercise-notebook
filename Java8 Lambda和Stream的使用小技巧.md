@@ -111,3 +111,5 @@ try {
 }
 ```
 Files.lines,Files.write 都是接受一个Path interface，返回stream()， 这里Paths实现了Path，可用get方法取得文件
+
+改了密码测试
