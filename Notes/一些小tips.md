@@ -10,7 +10,13 @@
     int[][] bb = aa.toArray(int[][]::new);
 ```
 ## Arrays.sort()
-这里面如果要写comparator, 不能传入primitive 的 array! 比如char[], 因为Comparator有<>的, <>里必须放Object!
+这里面如果要自己手写comparator, 不能传入primitive 的 array! 比如char[], 因为Comparator有<>的, <>里必须放Object!
+但是有特殊的comparator可以使用,比如
+```java
+Comparator.comparingInt(a -> a[0])
+
+Arrays.sort(tiles, Comparator.comparingInt(a -> a[0]));
+```
 ## Array -> List
 注意list里不能有primitive type. 这里转换需要boxing
 ```java
@@ -18,11 +24,11 @@ int[] num = {1,2,3};
 List<Integer> b = 
     IntStream.of(num)
         .boxed()
-        .collect(Collectors.toCollectio(LinkedList::new));
+        .collect(Collectors.toCollection(LinkedList::new));
 ```
-Object array 可以正常用Arrays.asList()转换
 
-## new 多个线程 
+## Arrays.asList()
+Object array 可以正常用Arrays.asList()转换
 ```java
     Thread[] threads = new Thread[100];
     for (int i = 0; i < 100; i++) {
